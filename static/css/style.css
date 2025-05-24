@@ -1,0 +1,18 @@
+/* 커스텀 스타일 */
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.btn {
+  border-radius: 4px;
+}
+
+.card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.invalid-feedback {
+  display: block;
+}
+EOF < /dev/null

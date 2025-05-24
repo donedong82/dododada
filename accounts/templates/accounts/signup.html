@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}회원가입{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+          <h3 class="mb-0 text-center">회원가입</h3>
+        </div>
+        <div class="card-body p-4">
+          <form method="post">
+            {% csrf_token %}
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="{{ form.username.id_for_label }}" class="form-label">아이디</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                  <div class="invalid-feedback d-block">
+                    {% for error in form.username.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="{{ form.email.id_for_label }}" class="form-label">이메일 <span class="text-danger">*</span></label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                  <div class="invalid-feedback d-block">
+                    {% for error in form.email.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="{{ form.password1.id_for_label }}" class="form-label">비밀번호</label>
+                <input type="password" name="{{ form.password1.name }}" id="{{ form.password1.id_for_label }}" class="form-control {% if form.password1.errors %}is-invalid{% endif %}" placeholder="비밀번호를 입력하세요">
+                {% if form.password1.errors %}
+                  <div class="invalid-feedback d-block">
+                    {% for error in form.password1.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="{{ form.password2.id_for_label }}" class="form-label">비밀번호 확인</label>
+                <input type="password" name="{{ form.password2.name }}" id="{{ form.password2.id_for_label }}" class="form-control {% if form.password2.errors %}is-invalid{% endif %}" placeholder="비밀번호를 다시 입력하세요">
+                {% if form.password2.errors %}
+                  <div class="invalid-feedback d-block">
+                    {% for error in form.password2.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="{{ form.phone.id_for_label }}" class="form-label">전화번호</label>
+                {{ form.phone }}
+                {% if form.phone.errors %}
+                  <div class="invalid-feedback d-block">
+                    {% for error in form.phone.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="{{ form.gender.id_for_label }}" class="form-label">성별</label>
+                {{ form.gender }}
+                {% if form.gender.errors %}
+                  <div class="invalid-feedback d-block">
+                    {% for error in form.gender.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label for="{{ form.birth_year.id_for_label }}" class="form-label">출생년도</label>
+                {{ form.birth_year }}
+                {% if form.birth_year.errors %}
+                  <div class="invalid-feedback d-block">
+                    {% for error in form.birth_year.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="{{ form.birth_month.id_for_label }}" class="form-label">출생월</label>
+                {{ form.birth_month }}
+                {% if form.birth_month.errors %}
+                  <div class="invalid-feedback d-block">
+                    {% for error in form.birth_month.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              
+              <div class="col-md-4 mb-3">
+                <label for="{{ form.birth_day.id_for_label }}" class="form-label">출생일</label>
+                {{ form.birth_day }}
+                {% if form.birth_day.errors %}
+                  <div class="invalid-feedback d-block">
+                    {% for error in form.birth_day.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="{{ form.address.id_for_label }}" class="form-label">주소</label>
+              {{ form.address }}
+              {% if form.address.errors %}
+                <div class="invalid-feedback d-block">
+                  {% for error in form.address.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-dark">회원가입</button>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer text-center">
+          <p class="mb-0">이미 계정이 있으신가요? <a href="{% url 'accounts:login' %}" class="text-decoration-none">로그인</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

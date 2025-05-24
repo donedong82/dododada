@@ -1,0 +1,51 @@
+[
+  {
+    "model": "dododada.category",
+    "pk": 1,
+    "fields": {
+      "name": "전자기기"
+    }
+  },
+  {
+    "model": "dododada.category",
+    "pk": 2,
+    "fields": {
+      "name": "의류"
+    }
+  },
+  {
+    "model": "dododada.category",
+    "pk": 3,
+    "fields": {
+      "name": "도서"
+    }
+  },
+  {
+    "model": "dododada.category",
+    "pk": 4,
+    "fields": {
+      "name": "식품"
+    }
+  },
+  {
+    "model": "dododada.category",
+    "pk": 5,
+    "fields": {
+      "name": "가구"
+    }
+  },
+  {
+    "model": "dododada.category",
+    "pk": 6,
+    "fields": {
+      "name": "화장품"
+    }
+  },
+  {
+    "model": "dododada.category",
+    "pk": 7,
+    "fields": {
+      "name": "스포츠/레저"
+    }
+  }
+]

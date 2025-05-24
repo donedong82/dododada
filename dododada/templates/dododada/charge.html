@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}포인트 충전{% endblock %}
+
+{% block additional_head %}
+<style>
+  .charge-amount {
+    border: 1px solid #dee2e6;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .charge-amount:hover, .charge-amount.selected {
+    background-color: #212529;
+    color: white;
+  }
+  
+  .amount-display {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .warning-text {
+    color: #dc3545;
+    font-size: 0.9rem;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row mb-4">
+    <div class="col">
+      <h2 class="mb-4">포인트 충전</h2>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <form method="post" id="chargeForm">
+            {% csrf_token %}
+            <input type="hidden" name="amount" id="selectedAmount" value="">
+            
+            <div class="mb-4">
+              <h5>충전 금액 선택</h5>
+              <div class="row g-3 mb-4">
+                <div class="col-md-4 col-6">
+                  <div class="charge-amount rounded" data-amount="1000">
+                    <h5>₩ 1,000</h5>
+                    <p class="mb-0">1,000 포인트</p>
+                  </div>
+                </div>
+                <div class="col-md-4 col-6">
+                  <div class="charge-amount rounded" data-amount="2000">
+                    <h5>₩ 2,000</h5>
+                    <p class="mb-0">2,000 포인트</p>
+                  </div>
+                </div>
+                <div class="col-md-4 col-6">
+                  <div class="charge-amount rounded" data-amount="5000">
+                    <h5>₩ 5,000</h5>
+                    <p class="mb-0">5,000 포인트</p>
+                  </div>
+                </div>
+                <div class="col-md-4 col-6">
+                  <div class="charge-amount rounded" data-amount="10000">
+                    <h5>₩ 10,000</h5>
+                    <p class="mb-0">10,000 포인트</p>
+                  </div>
+                </div>
+                <div class="col-md-4 col-6">
+                  <div class="charge-amount rounded" data-amount="20000">
+                    <h5>₩ 20,000</h5>
+                    <p class="mb-0">20,000 포인트</p>
+                  </div>
+                </div>
+                <div class="col-md-4 col-6">
+                  <div class="charge-amount rounded" data-amount="50000">
+                    <h5>₩ 50,000</h5>
+                    <p class="mb-0">50,000 포인트</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card bg-light mb-4">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span>충전 금액:</span>
+                  <span class="amount-display">₩ <span id="amountDisplay">0</span></span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="d-grid">
+              <button type="submit" class="btn btn-dark btn-lg" id="chargeButton" disabled>
+                <i class="fas fa-coins me-2"></i>코인으로 충전하기
+              </button>
+            </div>
+            
+            <div class="mt-3">
+              <p class="warning-text text-center">
+                <i class="fas fa-exclamation-triangle me-1"></i>
+                실제 결제가 되지 않습니다. 이후 계약 진행후 구현하시길 바랍니다.
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra-script %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const chargeAmounts = document.querySelectorAll('.charge-amount');
+    const selectedAmountInput = document.getElementById('selectedAmount');
+    const amountDisplay = document.getElementById('amountDisplay');
+    const chargeButton = document.getElementById('chargeButton');
+    
+    chargeAmounts.forEach(item => {
+      item.addEventListener('click', function() {
+        chargeAmounts.forEach(el => el.classList.remove('selected'));
+        
+        this.classList.add('selected');
+        
+        const amount = this.dataset.amount;
+        selectedAmountInput.value = amount;
+        
+        amountDisplay.textContent = Number(amount).toLocaleString();
+        
+        chargeButton.disabled = false;
+      });
+    });
+  });
+</script>
+{% endblock %}

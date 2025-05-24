@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}결제 내역{% endblock %}
+
+{% block additional_head %}
+<style>
+  .order-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #eee;
+  }
+  
+  .order-card {
+    margin-bottom: 30px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 12px;
+    overflow: hidden;
+    border: none;
+  }
+  
+  .order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+  
+  .order-date-header {
+    background-color: #212529;
+    color: white;
+    padding: 12px 20px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  
+  .order-info {
+    padding: 25px;
+  }
+  
+  .product-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  
+  .info-label {
+    font-weight: 500;
+    color: #555;
+    width: 120px;
+    display: inline-block;
+  }
+  
+  .info-value {
+    font-weight: 600;
+  }
+  
+  .price-badge {
+    background-color: #e9f5ff;
+    color: #0d6efd;
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-weight: 600;
+    display: inline-block;
+  }
+  
+  .order-section {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .order-section:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 5px;
+    height: 14px;
+    width: 14px;
+    background-color: #212529;
+    border-radius: 50%;
+  }
+  
+  .order-section.category:before {
+    background-color: #17a2b8;
+  }
+  
+  .order-section.price:before {
+    background-color: #0d6efd;
+  }
+  
+  .btn-view-product {
+    border-radius: 50px;
+    padding: 8px 20px;
+    border-width: 2px;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  
+  .btn-view-product:hover {
+    background-color: #212529;
+    color: white;
+  }
+  
+  .card-shadow {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  }
+  
+  .empty-orders {
+    padding: 50px 0;
+    text-align: center;
+  }
+  
+  .empty-orders i {
+    font-size: 3rem;
+    color: #6c757d;
+    margin-bottom: 20px;
+  }
+  
+  .empty-orders h4 {
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2 class="mb-4 fw-bold">결제 내역</h2>
+  
+  {% if orders %}
+    {% for order in orders %}
+      <div class="card order-card shadow card-shadow">
+        <div class="order-date-header d-flex justify-content-between align-items-center">
+          <div>
+            <i class="far fa-calendar-alt me-2"></i>
+            <span class="me-2">결제일자:</span>
+            <span>{{ order.created_at|date:"Y년 m월 d일" }}</span>
+          </div>
+          <div>
+            <span>{{ order.created_at|date:"H:i:s" }}</span>
+          </div>
+        </div>
+        
+        <div class="order-info">
+          <div class="row">
+            <div class="col-md-2 col-sm-3 col-4 text-center mb-3 mb-md-0">
+              <img src="{{ order.product.image.url }}" alt="{{ order.product.name }}" class="order-image">
+            </div>
+            
+            <div class="col-md-7 col-sm-9 col-8">
+              <h4 class="product-title">{{ order.product.name }}</h4>
+              
+              <div class="order-section category">
+                <span class="info-label">상품 카테고리:</span>
+                <span class="info-value">{{ order.product.category.name }}</span>
+              </div>
+              
+              <div class="order-section price">
+                <span class="info-label">결제 금액:</span>
+                <span class="price-badge">{{ order.price_at_purchase }} 포인트</span>
+              </div>
+              
+              <div class="order-section">
+                <span class="info-label">상품 코드:</span>
+                <span class="info-value text-muted">#{{ order.product.id }}</span>
+              </div>
+            </div>
+            
+            <div class="col-md-3 col-12 d-flex align-items-center justify-content-md-end justify-content-start mt-3 mt-md-0">
+              <a href="{% url 'dododada:product_detail' product_id=order.product.id %}" class="btn btn-outline-dark btn-view-product">
+                <i class="fas fa-external-link-alt me-2"></i>상품 다시 보기
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="card shadow card-shadow">
+      <div class="card-body empty-orders">
+        <i class="fas fa-shopping-bag"></i>
+        <h4>아직 구매한 상품이 없습니다</h4>
+        <p class="text-muted mb-4">상품을 구매하고 결제 내역을 확인해보세요.</p>
+        <a href="{% url 'dododada:products' %}" class="btn btn-dark btn-lg">
+          <i class="fas fa-shopping-cart me-2"></i>상품 구경하기
+        </a>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
