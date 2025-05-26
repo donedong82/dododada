@@ -2,9 +2,9 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['13.125.43.166', 'preprintreserve.com', 'www.preprintreserve.com']
+ALLOWED_HOSTS = ['3.39.194.46', 'dododada.com', 'www.dododada.com']
 
-CSRF_TRUSTED_ORIGINS = ['http://13.125.43.166', 'https://13.125.43.166', 'https://preprintreserve.com', 'https://www.preprintreserve.com']
+CSRF_TRUSTED_ORIGINS = ['http://3.39.194.46', 'https://3.39.194.46', 'https://dododada.com', 'https://www.dododada.com']
 
 STATIC_ROOT = BASE_DIR / 'static'
 
