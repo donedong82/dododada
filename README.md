@@ -61,6 +61,29 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 # 필요한 패키지 설치
 pip install -r requirements.txt
 
+# 프로젝트 루트 경로에서 secrets.json 파일 생성
+{
+    "SECRET": "django-insecure...~~~~~",
+}
+=> 다음 정보 저장
+
+# 프로젝트 루트 경로의 manage.py 파일 클릭 및 환경을 local로 변경
+def main():
+    """Run administrative tasks."""
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
+    try:
+        from django.core.management import execute_from_command_line
+    except ImportError as exc:
+        raise ImportError(
+            "Couldn't import Django. Are you sure it's installed and "
+            "available on your PYTHONPATH environment variable? Did you "
+            "forget to activate a virtual environment?"
+        ) from exc
+    execute_from_command_line(sys.argv)
+
+=> 위와 같이 config.settings.production을 config.settings.local로 변경
+=> (주의) 깃허브에 배포시에는 꼭 config.settings.production으로 변경후 올리기
+
 # 데이터베이스 마이그레이션
 python manage.py migrate
 
@@ -68,7 +91,11 @@ python manage.py migrate
 python manage.py loaddata dododada/fixtures/categories.json
 
 # 서버 실행
-python manage.py runserver
+python manage.py runserver --settings=config.settings.local
+
+# 접속
+http://127.0.0.1:8000/
+
 ```
 
 ## 📸 서비스 화면
@@ -83,7 +110,7 @@ python manage.py runserver
 
 - 프레임워크: Django
 - 프론트엔드: HTML, CSS, JavaScript, Bootstrap 5
-- 데이터베이스: SQLite (개발), PostgreSQL (배포 권장)
+- 데이터베이스: SQLite (개발)
 - 이미지 처리: Pillow
 
 ## 🔒 보안 정보
@@ -94,7 +121,7 @@ python manage.py runserver
 
 ## 📜 라이센스
 
-이 프로젝트는 MIT 라이센스 하에 배포됩니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
+이 프로젝트는 dododada서비스 라이센스 하에 배포됩니다.
 
 ---
 
